@@ -1,0 +1,32 @@
+{
+  "name": "portcop",
+  "version": "1.0.0",
+  "author": "hawila",
+  "description": "Your cross-platform port detective 🚔 — find, inspect, and kill processes by port",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hawila/portcop.git"
+  },
+  "bin": {
+    "portcop": "bin/portcop.js"
+  },
+  "scripts": {
+    "test": "node bin/portcop.js --help"
+  },
+  "keywords": [
+    "port",
+    "kill",
+    "process",
+    "cli",
+    "devtools",
+    "lsof",
+    "netstat",
+    "cross-platform"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {}
+}
