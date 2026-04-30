@@ -81,11 +81,19 @@ portcop free 3000-3010
 
 ## How it works
 
-| OS      | Detection              | Kill              |
-|---------|------------------------|-------------------|
-| macOS   | `lsof -i :PORT`        | `kill -9 PID`     |
-| Linux   | `lsof -i :PORT`        | `kill -9 PID`     |
-| Windows | `netstat -ano`         | `taskkill /F`     |
+**macOS:** uses `lsof`
+
+**Linux:** tries 3 strategies in order, using the first one that works:
+1. `lsof` — available on most distros
+2. `ss` — modern replacement for netstat, used when lsof isn't installed
+3. `/proc/net/tcp` — pure Linux kernel file, no tools needed at all. Works in Docker containers, CI runners, and minimal environments where nothing is installed
+
+**Windows:** chains `netstat -ano` → `tasklist` (no single command gives port + process name together)
+
+| OS      | Kill              |
+|---------|-------------------|
+| macOS / Linux | `kill -9 PID` |
+| Windows | `taskkill /PID /F` |
 
 All OS differences are abstracted away. The CLI output is identical everywhere.
 
