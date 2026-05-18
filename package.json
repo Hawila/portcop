@@ -1,8 +1,8 @@
 {
   "name": "portcop",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "hawila",
-  "description": "Your cross-platform port detective 🚔 — find, inspect, and kill processes by port",
+  "description": "Your cross-platform port detective 🚔 — find, inspect, and kill processes by port or process name",
   "type": "module",
   "repository": {
     "type": "git",

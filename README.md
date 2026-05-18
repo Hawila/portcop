@@ -1,6 +1,6 @@
 # portcop 🚔
 
-> Your cross-platform port detective — find, inspect, and kill processes by port number.
+> Your cross-platform port detective — find, inspect, and kill processes by port number or process name.
 
 No dependencies. Works on **macOS**, **Linux**, and **Windows**.
 
@@ -219,6 +219,18 @@ All OS differences are abstracted away. The CLI output is identical everywhere.
 | `portcop free <port>`            | Check if a port is free                  |
 | `portcop free <start>-<end>`     | Find first free port in range            |
 | `portcop free <port>+ --count N` | Find next N free ports starting from port|
+
+---
+
+## Testing
+
+```bash
+node test.js
+```
+
+The test suite spins up real TCP servers to verify behavior end-to-end, with zero test framework dependencies.
+
+---
 
 ## License
 
