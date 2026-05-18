@@ -1,6 +1,6 @@
 {
   "name": "portcop",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "author": "hawila",
   "description": "Your cross-platform port detective 🚔 — find, inspect, and kill processes by port",
   "type": "module",
@@ -12,7 +12,7 @@
     "portcop": "bin/portcop.js"
   },
   "scripts": {
-    "test": "node bin/portcop.js --help"
+    "test": "node test.js"
   },
   "keywords": [
     "port",

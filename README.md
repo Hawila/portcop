@@ -54,6 +54,83 @@ portcop 3000 --kill
 
 ---
 
+### Check multiple ports at once
+
+```bash
+portcop 3000 4000 5000
+```
+
+```
+  ✘ Port 3000 → node  PID 8421  node server.js
+  ✔ Port 4000 is free
+  ✘ Port 5000 → python  PID 9103  python app.py
+
+  Kill all 2 occupied? (y/n)
+```
+
+---
+
+### List all occupied ports
+
+```bash
+portcop ls
+```
+
+```
+  Scanning all occupied ports...
+
+  3000  node            PID 8421    node server.js
+  5173  node            PID 9103    node vite.js
+  8080  python          PID 9210    python manage.py runserver
+
+  3 ports occupied
+```
+
+---
+
+### Find processes by name
+
+```bash
+portcop -n node
+```
+
+```
+  Searching for processes matching "node"...
+
+  Found 3 processes matching "node"
+
+  ✘ Port 3000  node  PID 8421
+     node server.js
+  ✘ Port 5173  node  PID 9103
+     node vite.js
+  ✘ Port 8080  node  PID 9210
+     node webpack.js
+
+  Kill all 3?  y / n / ports (e.g. 3000,5173,8080)
+```
+
+At the prompt you can:
+- `y` — kill all matching processes
+- `n` — cancel, no action taken
+- `3000` — kill a single port only
+- `3000,5173` — kill specific ports, leave the rest running
+
+---
+
+### Kill all processes by name (no prompt)
+
+```bash
+portcop -n node --kill
+```
+
+```
+  ✔ Killed node (PID 8421)
+  ✔ Killed node (PID 9103)
+  ✔ Killed node (PID 9210)
+```
+
+---
+
 ### Check if a port is free
 
 ```bash
@@ -79,6 +156,23 @@ portcop free 3000-3010
 
 ---
 
+### Find next N free ports
+
+```bash
+portcop free 3000+ --count 5
+```
+
+```
+  Finding 5 free ports from 3000...
+  ✔ 3000
+  ✔ 3001
+  ✔ 3003
+  ✔ 3005
+  ✔ 3006
+```
+
+---
+
 ## How it works
 
 **macOS:** uses `lsof`
@@ -90,10 +184,10 @@ portcop free 3000-3010
 
 **Windows:** chains `netstat -ano` → `tasklist` (no single command gives port + process name together)
 
-| OS      | Kill              |
-|---------|-------------------|
-| macOS / Linux | `kill -9 PID` |
-| Windows | `taskkill /PID /F` |
+| OS            | Kill              |
+|---------------|-------------------|
+| macOS / Linux | `kill -9 PID`     |
+| Windows       | `taskkill /PID /F`|
 
 All OS differences are abstracted away. The CLI output is identical everywhere.
 
@@ -103,12 +197,28 @@ All OS differences are abstracted away. The CLI output is identical everywhere.
 
 ## Options
 
-| Flag | Alias | Description |
-|------|-------|-------------|
-| `--kill` | `-k` | Kill without confirmation prompt |
-| `--help` | `-h` | Show help |
+| Flag        | Alias | Description                          |
+|-------------|-------|--------------------------------------|
+| `--kill`    | `-k`  | Kill without confirmation prompt     |
+| `--name`    | `-n`  | Search by process name               |
+| `--count N` |       | Number of free ports to find         |
+| `--help`    | `-h`  | Show help                            |
 
 ---
+
+## Commands
+
+| Command                          | Description                              |
+|----------------------------------|------------------------------------------|
+| `portcop <port>`                 | Check who is using a port                |
+| `portcop <port> --kill`          | Kill the process without asking          |
+| `portcop <p1> <p2> <p3>`        | Check multiple ports at once             |
+| `portcop ls`                     | List all occupied ports                  |
+| `portcop -n <name>`              | Find all ports used by a process name    |
+| `portcop -n <name> --kill`       | Kill all processes matching a name       |
+| `portcop free <port>`            | Check if a port is free                  |
+| `portcop free <start>-<end>`     | Find first free port in range            |
+| `portcop free <port>+ --count N` | Find next N free ports starting from port|
 
 ## License
 
